@@ -3,6 +3,7 @@ from rule_parser_api import rule_parser_bp
 from rule_execution_api import rule_execution_bp
 from rule_conversion_api import rule_conversion_bp
 from siem_integration_api import siem_integration_bp
+import os
 
 app = Flask(__name__)
 
@@ -17,4 +18,5 @@ def home():
     return "Rule Engine API"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    debug_mode = os.getenv('FLASK_DEBUG', 'False').lower() in ['true', '1', 't']
+    app.run(debug=debug_mode)
