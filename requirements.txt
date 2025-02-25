@@ -1,0 +1,5 @@
+click
+pyyaml
+requests
+flask      # For web API (optional)
+fastapi    # For web API (optional)
