@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app as app
 from engine.integration.siem_integration import send_to_siem
+import os
 
 siem_integration_bp = Blueprint('siem_integration', __name__)
 
@@ -9,6 +10,10 @@ def send_rule_to_siem():
         rule_path = request.json.get('rule_path')
         if not rule_path:
             return jsonify({"error": "rule_path is required"}), 400
+
+        # Validate the existence of the rule file
+        if not os.path.exists(rule_path):
+            raise FileNotFoundError(f"Rule file at {rule_path} not found.")
 
         send_to_siem(rule_path)
         return jsonify({"status": "success", "message": "Rule sent to SIEM successfully"})
