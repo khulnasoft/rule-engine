@@ -1,6 +1,6 @@
 import unittest
-from engine.converters.sigma_to_yara import convert_sigma_to_yara
-from engine.converters.sigma_to_yara import load_sigma_rule
+from rule_engine.engine.converters.sigma_to_yara import convert_sigma_to_yara
+from rule_engine.engine.converters.sigma_to_yara import load_sigma_rule
 
 class TestSigmaToYaraConverter(unittest.TestCase):
     
