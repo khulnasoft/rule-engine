@@ -1,6 +1,6 @@
 import unittest
-from engine.converters.sigma_to_wazuh import convert_sigma_to_wazuh
-from engine.converters.sigma_to_wazuh import load_sigma_rule
+from rule_engine.engine.converters.sigma_to_wazuh import convert_sigma_to_wazuh
+from rule_engine.engine.converters.sigma_to_wazuh import load_sigma_rule
 
 class TestSigmaToWazuhConverter(unittest.TestCase):
 
