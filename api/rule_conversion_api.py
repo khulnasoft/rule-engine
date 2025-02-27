@@ -20,6 +20,11 @@ def convert_rule():
         rule_format = rule_data.get('format')
         rule_content = rule_data.get('rule')
 
+        if not rule_format:
+            return jsonify({"error": "format is required"}), 400
+        if not rule_content:
+            return jsonify({"error": "rule is required"}), 400
+
         # Check the requested conversion format and call the appropriate conversion function
         if rule_format == 'yara':
             converted_rule = convert_sigma_to_yara(rule_content)
