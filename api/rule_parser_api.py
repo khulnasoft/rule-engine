@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app as app
 from engine.parsers.sigma_parser import load_sigma_rule
 from engine.parsers.wazuh_parser import load_wazuh_rule
 
@@ -19,6 +19,7 @@ def validate_rule():
         elif rule_format == 'wazuh':
             load_wazuh_rule(rule_content)
         else:
+            app.logger.error("Unsupported rule format: %s", rule_format)
             return jsonify({"error": "Unsupported rule format"}), 400
 
         return jsonify({"status": "success", "message": "Rule validated successfully"})
