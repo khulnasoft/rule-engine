@@ -11,6 +11,9 @@ def validate_rule():
         rule_format = rule_data.get('format')
         rule_content = rule_data.get('rule')
 
+        if not rule_format or not rule_content:
+            return jsonify({"error": "Both 'format' and 'rule' fields are required"}), 400
+
         if rule_format == 'sigma':
             load_sigma_rule(rule_content)
         elif rule_format == 'wazuh':
@@ -19,5 +22,7 @@ def validate_rule():
             return jsonify({"error": "Unsupported rule format"}), 400
 
         return jsonify({"status": "success", "message": "Rule validated successfully"})
+    except ValueError as ve:
+        return jsonify({"error": str(ve)}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "An internal error has occurred!"}), 500
