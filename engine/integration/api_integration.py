@@ -12,7 +12,8 @@ def validate_rule():
         rule = load_rule(file_path)
         return jsonify({"status": "success", "rule": rule}), 200
     except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 400
+        app.logger.error("Exception occurred", exc_info=True)
+        return jsonify({"status": "error", "message": "An internal error has occurred!"}), 400
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
