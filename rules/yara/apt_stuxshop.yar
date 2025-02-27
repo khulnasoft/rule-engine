@@ -1,4 +1,3 @@
-
 rule STUXSHOP_config {
    meta:
       desc = "Stuxshop standalone sample configuration"
@@ -20,7 +19,7 @@ rule STUXSHOP_config {
       $flowerOverlap4 = { 55 8B EC 51 8D 4D FC 33 C0 51 50 6A 26 50 89 45 FC FF 15 }
       $flowerOverlap5 = { 85 DB 74 04 8B C3 EB 1A 8B 45 08 3B 45 14 74 07 B8 5D 06 00 00 EB 0B 85 F6 74 05 8B 45 0C 89 06 }
       $flowerOverlap6 = { 85 FF 74 12 83 7D F8 01 75 0C FF 75 0C FF 75 08 FF 15 }
-
+   }
    condition:
       all of ($flowerOverlap*)
       or

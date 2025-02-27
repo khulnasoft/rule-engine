@@ -37,6 +37,7 @@ rule WEBSHELL_PAS_webshell_ZIPArchiveFile {
       id = "081cc65b-e51c-59fc-a518-cd986e8ee2f7"
    strings:
       $s1 = "Archive created by P.A.S. v."
+   }
    condition:
       $s1
 }

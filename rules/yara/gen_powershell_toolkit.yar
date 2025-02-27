@@ -171,6 +171,7 @@ rule ps1_toolkit_Inveigh_BruteForce_2 {
 		score = 80
 		hash1 = "a2ae1e02bcb977cd003374f551ed32218dbcba3120124e369cc150b9a63fe3b8"
 		id = "1319b03d-67e8-5155-8037-e3375e39f6a0"
+	}
 	strings:
 		$s1 = "}.NTLMv2_file_queue[0]|Out-File ${" ascii
 		$s2 = "}.NTLMv2_file_queue.RemoveRange(0,1)" ascii
@@ -218,7 +219,7 @@ rule ps1_toolkit_Persistence_2 {
 		$s4 = "[Parameter( ParameterSetName = 'ScheduledTaskAtLogon', Mandatory = $True )]" ascii
 		$s5 = "FromBase64String('UwBjAGgAZQBkAHUAbABlAGQAVABhAHMAawBBAHQATABvAGcAbwBuAA==')))" ascii
 		$s6 = "[Parameter( ParameterSetName = 'PermanentWMIAtStartup', Mandatory = $True )]" fullword ascii
-		$s7 = "FromBase64String('TQBlAHQAaABvAGQA')" ascii
+		$s7 = "FromBase64String('TQBlAHQAaABvAGQ')" ascii
 		$s8 = "FromBase64String('VAByAGkAZwBnAGUAcgA=')" ascii
 		$s9 = "[Runtime.InteropServices.CallingConvention]::Winapi," fullword ascii
 	condition:

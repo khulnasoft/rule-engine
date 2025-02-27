@@ -1,4 +1,3 @@
-
 /* NCSC rules
    slightly modified by Florian Roth for memory usage reasons
 */
@@ -121,6 +120,7 @@ rule APT_Sandworm_CyclopsBlink_config_identifiers {
       $ = {3C 00 3C 63 60 00 3A 20 90 09 00 00}
       // RSA private key data starts with the string "<s: "
       $ = {3C 00 3C 73 60 00 3A 20 90 09 00 00}
+	}
    condition:
       (uint32(0) == 0x464c457f) and (all of them)
 }

@@ -34,5 +34,9 @@ def convert_rule():
             return jsonify({"error": "Unsupported conversion format"}), 400
 
         return jsonify({"status": "success", "converted_rule": converted_rule})
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except KeyError as e:
+        return jsonify({"error": f"Missing key: {str(e)}"}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "An internal error has occurred!"}), 500

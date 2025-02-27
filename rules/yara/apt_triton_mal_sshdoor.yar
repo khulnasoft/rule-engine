@@ -1,4 +1,3 @@
-
 // For feedback or questions contact us at: github@eset.com
 // https://github.com/eset/malware-ioc/
 //
@@ -177,6 +176,7 @@ rule MAL_LNX_SSHDOOR_Triton {
       $mimban_i1 = "BIO_f_base64"
       $mimban_i2 = "PEM_read_bio_RSA_PUBKEY"
       $mimban_i3 = "gethostbyname"
+	}
    condition:
       uint32be(0) == 0x7f454c46 and // ELF
       ( 1 of ($a_*) or 2 of ($ac_*) ) // SSH Binary
