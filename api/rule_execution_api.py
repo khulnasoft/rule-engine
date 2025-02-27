@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app as app
 from engine.execution import execute_rules
 
 rule_execution_bp = Blueprint('rule_execution', __name__)
@@ -13,4 +13,5 @@ def execute_rule_on_logs():
         execute_rules(log_file)
         return jsonify({"status": "success", "message": "Rules executed successfully"})
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        app.logger.error("An error occurred: %s", str(e))
+        return jsonify({"error": "An internal error has occurred!"}), 500
