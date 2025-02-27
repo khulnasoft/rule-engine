@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app as app
 from engine.integration.siem_integration import send_to_siem
 
 siem_integration_bp = Blueprint('siem_integration', __name__)
@@ -12,5 +12,12 @@ def send_rule_to_siem():
 
         send_to_siem(rule_path)
         return jsonify({"status": "success", "message": "Rule sent to SIEM successfully"})
+    except ValueError as ve:
+        app.logger.error("ValueError occurred: %s", str(ve))
+        return jsonify({"error": str(ve)}), 400
+    except FileNotFoundError as fnfe:
+        app.logger.error("FileNotFoundError occurred: %s", str(fnfe))
+        return jsonify({"error": str(fnfe)}), 404
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        app.logger.error("An error occurred: %s", str(e))
+        return jsonify({"error": "An internal error has occurred!"}), 500
