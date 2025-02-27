@@ -3,7 +3,15 @@
 import yaml
 
 def convert_sigma_to_yara(sigma_rule):
-    """Convert a Sigma rule to YARA format."""
+    """
+    Convert a Sigma rule to YARA format.
+
+    Parameters:
+    - sigma_rule (dict): The Sigma rule to be converted.
+
+    Returns:
+    - str: The converted YARA rule.
+    """
     yara_rule = []
 
     # YARA rule name
@@ -23,6 +31,14 @@ def convert_sigma_to_yara(sigma_rule):
     return "\n".join(yara_rule)
 
 def load_sigma_rule(file_path):
-    """Load and parse a Sigma rule from YAML."""
+    """
+    Load and parse a Sigma rule from YAML.
+
+    Parameters:
+    - file_path (str): The path to the Sigma rule file.
+
+    Returns:
+    - dict: The parsed Sigma rule.
+    """
     with open(file_path, 'r') as file:
         return yaml.safe_load(file)
