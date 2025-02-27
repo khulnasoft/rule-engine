@@ -91,6 +91,10 @@ To use the CLI, run the following command:
 python cli/main.py
 ```
 
+## Documentation
+
+For detailed code review guidelines, please refer to the [CODE_REVIEW_GUIDELINES.md](CODE_REVIEW_GUIDELINES.md) file.
+
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request.
