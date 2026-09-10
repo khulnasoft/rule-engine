@@ -5,7 +5,7 @@ UV = uv
 VENV_DIR = .venv
 DOCKER_IMAGE = rule-engine
 DOCKER_CONTAINER = rule-engine-container
-FLASK_APP = rule-engine/api/app.py
+FLASK_APP = src/rule_engine/api/app.py
 FLASK_PORT = 5000
 
 # Create a virtual environment and install dependencies using UV
@@ -23,7 +23,7 @@ install:
 # Run the Flask development server
 run:
 	@echo "Running Flask API server..."
-	$(UV) run flask run --host=0.0.0.0 --port=$(FLASK_PORT)
+	FLASK_APP=$(FLASK_APP) $(UV) run flask run --host=0.0.0.0 --port=$(FLASK_PORT)
 
 # Run tests
 test:
