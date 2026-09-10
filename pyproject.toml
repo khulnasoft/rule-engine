@@ -1,0 +1,26 @@
+[project]
+name = "rule-engine"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "fortishield", email = "161459699+FortiShield@users.noreply.github.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "click",
+    "pyyaml",
+    "requests",
+    "flask",
+    "yara-python>=4.5.4",
+]
+
+[project.scripts]
+rule-engine = "rule_engine:main"
+
+[dependency-groups]
+dev = ["pytest"]
+
+[build-system]
+requires = ["uv_build>=0.12.12,<0.13.0"]
+build-backend = "uv_build"
