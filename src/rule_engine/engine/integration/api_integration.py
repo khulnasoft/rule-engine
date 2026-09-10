@@ -1,6 +1,6 @@
 # rule-engine/engine/integration/api_integration.py
 from flask import Flask, request, jsonify
-from engine.parsers.load_rules import load_rule
+from rule_engine.engine.parsers.load_rules import load_rule
 
 app = Flask(__name__)
 

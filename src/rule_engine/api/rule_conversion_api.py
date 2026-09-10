@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from engine.converters.sigma_to_yara import convert_sigma_to_yara
-from engine.converters.sigma_to_wazuh import convert_sigma_to_wazuh
+from rule_engine.engine.converters.sigma_to_yara import convert_sigma_to_yara
+from rule_engine.engine.converters.sigma_to_wazuh import convert_sigma_to_wazuh
 
 rule_conversion_bp = Blueprint('rule_conversion', __name__)
 

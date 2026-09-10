@@ -1,10 +1,10 @@
 import sys
 import click
 import logging
-from rule_parser import load_rules
-from rule_execution import execute_rules
-from rule_conversion import convert_rule_format
-from siem_integration import send_to_siem
+from rule_engine.cli.rule_parser import load_rules
+from rule_engine.cli.rule_execution import execute_rules
+from rule_engine.cli.rule_conversion import convert_rule_format
+from rule_engine.cli.siem_integration import send_to_siem
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

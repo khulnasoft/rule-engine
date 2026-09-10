@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, current_app as app
-from engine.integration.siem_integration import send_to_siem
+from rule_engine.engine.integration.siem_integration import send_to_siem
 import os
 
 siem_integration_bp = Blueprint('siem_integration', __name__)

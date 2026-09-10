@@ -1,8 +1,8 @@
 import yaml
 import xml.etree.ElementTree as ET
 import os
-from engine.parsers.sigma_parser import parse_sigma_rule
-from engine.parsers.wazuh_parser import parse_wazuh_rule
+from rule_engine.engine.parsers.sigma_parser import parse_sigma_rule
+from rule_engine.engine.parsers.wazuh_parser import parse_wazuh_rule
 
 def load_yaml_rule(file_path):
     with open(file_path, 'r') as file:

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, current_app as app
-from engine.execution import execute_rules
+from rule_engine.engine.execution import execute_rules
 import os
 
 rule_execution_bp = Blueprint('rule_execution', __name__)

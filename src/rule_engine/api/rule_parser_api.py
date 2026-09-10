@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app as app
-from engine.parsers.sigma_parser import load_sigma_rule
-from engine.parsers.wazuh_parser import load_wazuh_rule
+from rule_engine.engine.parsers.sigma_parser import load_sigma_rule
+from rule_engine.engine.parsers.wazuh_parser import load_wazuh_rule
 
 rule_parser_bp = Blueprint('rule_parser', __name__)
 
