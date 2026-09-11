@@ -1,29 +1,33 @@
-# rule-engine/engine/converters/sigma_to_wazuh.py
-
 import yaml
+
 
 def convert_sigma_to_wazuh(sigma_rule):
     """Convert a Sigma rule to Wazuh XML format."""
-    wazuh_rule = f"""
-<group>
-    <id>{sigma_rule['id']}</id>
-    <level>{sigma_rule['level']}</level>
-    <description>{sigma_rule['description']}</description>
-    <group>{sigma_rule['behaviorgroup']}</group>
-    <classification>{sigma_rule['classification']}</classification>
+    if not sigma_rule or not isinstance(sigma_rule, dict):
+        raise ValueError("Invalid Sigma rule: must be a non-empty dictionary")
+    ls = sigma_rule.get('logsource', {}) or {}
+    det = sigma_rule.get('detection', {}) or {}
+    sel = det.get('selection', {}) or {}
+    cmdline = ' '.join(sel.get('CommandLine', []))
+    wazuh_rule = f"""<group>
+    <id>{sigma_rule.get('id', '0')}</id>
+    <level>{sigma_rule.get('level', '0')}</level>
+    <description>{sigma_rule.get('description', '')}</description>
+    <group>{sigma_rule.get('behaviorgroup', '0')}</group>
+    <classification>{sigma_rule.get('classification', '0')}</classification>
     <logsource>
-        <category>{sigma_rule['logsource']['category']}</category>
-        <product>{sigma_rule['logsource']['product']}</product>
+        <category>{ls.get('category', 'unknown')}</category>
+        <product>{ls.get('product', 'unknown')}</product>
     </logsource>
     <detection>
         <selection>
-            <commandline>{' '.join(sigma_rule.get('detection', {}).get('selection', {}).get('CommandLine', []))}</commandline>
+            <commandline>{cmdline}</commandline>
         </selection>
-        <condition>{sigma_rule['detection']['condition']}</condition>
+        <condition>{det.get('condition', 'all')}</condition>
     </detection>
-</group>
-    """
+</group>"""
     return wazuh_rule.strip()
+
 
 def load_sigma_rule(file_path):
     """Load and parse a Sigma rule from YAML."""

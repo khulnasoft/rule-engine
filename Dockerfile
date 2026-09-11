@@ -1,11 +1,16 @@
 # Use an official Python runtime as the base image
 FROM python:3.14-slim
 
-# Install UV
-RUN pip install --no-cache-dir uv
+# Install UV and build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    libssl-dev \
+    libc6-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install --no-cache-dir uv
 
 # Set environment variables
-ENV FLASK_APP=rule-engine/api/app.py
+ENV FLASK_APP=src/rule_engine/api/app.py
 ENV FLASK_ENV=development
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5000
@@ -14,13 +19,10 @@ ENV FLASK_RUN_PORT=5000
 WORKDIR /app
 
 # Copy project files
-COPY pyproject.toml uv.lock ./
+COPY . /app/
 
 # Install dependencies using UV
 RUN uv sync --frozen --no-dev
-
-# Copy the application code into the container
-COPY . /app/
 
 # Expose the port Flask will run on
 EXPOSE 5000

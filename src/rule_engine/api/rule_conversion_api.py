@@ -1,39 +1,44 @@
 from flask import Blueprint, request, jsonify
 from rule_engine.engine.converters.sigma_to_yara import convert_sigma_to_yara
 from rule_engine.engine.converters.sigma_to_wazuh import convert_sigma_to_wazuh
+from rule_engine.engine.converters.yara_to_sigma import convert_yara_to_sigma
+from rule_engine.engine.converters.yara_to_wazuh import convert_yara_to_wazuh
+from rule_engine.engine.converters.wazuh_to_sigma import convert_wazuh_to_sigma
+from rule_engine.engine.converters.wazuh_to_yara import convert_wazuh_to_yara
+from rule_engine.engine.models import RuleFormat
 
 rule_conversion_bp = Blueprint('rule_conversion', __name__)
 
 @rule_conversion_bp.route('/convert', methods=['POST'])
 def convert_rule():
-    """
-    Convert a Sigma rule to the specified format (YARA or Wazuh).
-
-    Parameters:
-    - None (expects JSON payload in the request body with 'format' and 'rule' keys)
-
-    Returns:
-    - JSON response with the converted rule or an error message
-    """
     try:
         rule_data = request.json
         rule_format = rule_data.get('format')
         rule_content = rule_data.get('rule')
+        from_format = rule_data.get('from_format', 'sigma')
 
         if not rule_format:
             return jsonify({"error": "format is required"}), 400
         if not rule_content:
             return jsonify({"error": "rule is required"}), 400
 
-        # Check the requested conversion format and call the appropriate conversion function
-        if rule_format == 'yara':
-            converted_rule = convert_sigma_to_yara(rule_content)
-        elif rule_format == 'wazuh':
-            converted_rule = convert_sigma_to_wazuh(rule_content)
+        result = None
+        if from_format == 'sigma' and rule_format == 'yara':
+            result = convert_sigma_to_yara(rule_content)
+        elif from_format == 'sigma' and rule_format == 'wazuh':
+            result = convert_sigma_to_wazuh(rule_content)
+        elif from_format == 'yara' and rule_format == 'sigma':
+            result = convert_yara_to_sigma(rule_content)
+        elif from_format == 'yara' and rule_format == 'wazuh':
+            result = convert_yara_to_wazuh(rule_content)
+        elif from_format == 'wazuh' and rule_format == 'sigma':
+            result = convert_wazuh_to_sigma(rule_content)
+        elif from_format == 'wazuh' and rule_format == 'yara':
+            result = convert_wazuh_to_yara(rule_content)
         else:
             return jsonify({"error": "Unsupported conversion format"}), 400
 
-        return jsonify({"status": "success", "converted_rule": converted_rule})
+        return jsonify({"status": "success", "converted_rule": result})
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except KeyError as e:

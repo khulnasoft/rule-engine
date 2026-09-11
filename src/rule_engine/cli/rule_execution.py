@@ -1,15 +1,24 @@
-def execute_rules(log_file):
-    """Execute rules on logs."""
+from rule_engine.engine.executors import execute_rules, get_executor
+from rule_engine.engine.parsers import load_rule, load_rules_from_directory
+from rule_engine.engine.models import RuleFormat
+
+
+def execute_rules_cli(log_file, rule_path=None):
     try:
-        # Logic for parsing logs and matching with rules
-        print(f"Executing rules on log file: {log_file}")
-        # Example of processing logs (assuming rules are loaded already)
-        with open(log_file, 'r') as log:
-            log_lines = log.readlines()
-            # Here, process each line with loaded rules
-            for line in log_lines:
-                print(f"Processing line: {line}")
-    except FileNotFoundError as fnfe:
-        print(f"Error: {fnfe}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+        if rule_path:
+            rules = [load_rule(rule_path)]
+        else:
+            rules = load_rules_from_directory("rules")
+        if not rules:
+            print("No rules loaded")
+            return []
+        results = execute_rules(rules, log_file)
+        print(f"Executed {len(rules)} rules on {log_file}: {len(results)} matches found")
+        for r in results:
+            print(f"  - {r}")
+        return results
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+        return []
+
+execute_rules_cli = execute_rules_cli

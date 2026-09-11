@@ -12,22 +12,16 @@ def convert_sigma_to_yara(sigma_rule):
     Returns:
     - str: The converted YARA rule.
     """
+    if not sigma_rule or not isinstance(sigma_rule, dict):
+        raise ValueError("Invalid Sigma rule: must be a non-empty dictionary")
     yara_rule = []
-
-    # YARA rule name
-    yara_rule.append(f"rule {sigma_rule['title']} {{")
-    
-    # YARA strings section
+    yara_rule.append(f"rule {sigma_rule.get('title', 'unknown')} {{")
     yara_rule.append("    strings:")
     for string in sigma_rule.get('detection', {}).get('selection', {}).get('CommandLine', []):
         yara_rule.append(f"        $a = \"{string}\"")
-    
-    # YARA condition section
     yara_rule.append("    condition:")
-    yara_rule.append(f"        {sigma_rule['detection']['condition']}")
-
+    yara_rule.append(f"        {sigma_rule.get('detection', {}).get('condition', 'all of them')}")
     yara_rule.append("}")
-
     return "\n".join(yara_rule)
 
 def load_sigma_rule(file_path):

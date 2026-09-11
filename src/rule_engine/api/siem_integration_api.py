@@ -8,14 +8,12 @@ siem_integration_bp = Blueprint('siem_integration', __name__)
 def send_rule_to_siem():
     try:
         rule_path = request.json.get('rule_path')
+        siem_type = request.json.get('siem_type', 'splunk')
         if not rule_path:
             return jsonify({"error": "rule_path is required"}), 400
-
-        # Validate the existence of the rule file
         if not os.path.exists(rule_path):
             raise FileNotFoundError(f"Rule file at {rule_path} not found.")
-
-        send_to_siem(rule_path)
+        send_to_siem({"rule": rule_path}, siem_type=siem_type)
         return jsonify({"status": "success", "message": "Rule sent to SIEM successfully"})
     except ValueError as ve:
         app.logger.error("ValueError occurred: %s", str(ve))

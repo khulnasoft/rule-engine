@@ -1,0 +1,6 @@
+# ClamAV Normal Database
+# Signature format: Name;TYPE;PATTERN;INFO;
+# TYPE: 0=normal, 1=archive, 2=ole2, 3=pe, 4=email, 5=document
+Win.Executable.Malware.Generic-1234;0;This is a generic malware signature;author=test;
+Win.PE.Trojan.Generic-5678;3;MZ header with suspicious imports;author=test;
+Linux.Trojan.Script-999;4;Linux web shell pattern;author=test;
