@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QueryList>
+  <Query Id="0" Path="Microsoft-Windows-Sysmon/Operational">
+    <Select Path="Microsoft-Windows-Sysmon/Operational">*[System[(EventID=1)]]</Select>
+    <MatchOn xmlns="http://schemas.microsoft.com/win/2004/08/events/query">
+      <Binary Name="ImageLoaded">C:\Windows\System32\ntdll.dll</Binary>
+    </MatchOn>
+  </Query>
+  <Query Id="1" Path="Microsoft-Windows-Sysmon/Operational">
+    <Select Path="Microsoft-Windows-Sysmon/Operational">*[System[(EventID=3)]]</Select>
+    <Description>Sysmon - Network Connection</Description>
+  </Query>
+</QueryList>

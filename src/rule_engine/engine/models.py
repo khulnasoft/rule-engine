@@ -7,6 +7,8 @@ class RuleFormat(Enum):
     YARA = "yara"
     SIGMA = "sigma"
     WAZUH = "wazuh"
+    CLAMAV = "clamav"
+    SYSMON = "sysmon"
 
 
 @dataclass
@@ -27,6 +29,10 @@ class Rule:
     frequency: Optional[int] = None
     timeframe: Optional[str] = None
     mitre: Optional[Dict[str, Any]] = None
+    primary_category: Optional[str] = None
+    categories: List[str] = field(default_factory=list)
+    category_source: Dict[str, Any] = field(default_factory=dict)
+    cves: List[str] = field(default_factory=list)
     raw: Optional[Any] = None
 
     def to_dict(self) -> Dict[str, Any]:
@@ -47,4 +53,8 @@ class Rule:
             "frequency": self.frequency,
             "timeframe": self.timeframe,
             "mitre": self.mitre,
+            "primary_category": self.primary_category,
+            "categories": self.categories,
+            "category_source": self.category_source,
+            "cves": self.cves,
         }

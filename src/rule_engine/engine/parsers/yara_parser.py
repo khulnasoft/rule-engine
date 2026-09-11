@@ -1,6 +1,7 @@
 import yaml
 import xml.etree.ElementTree as ET
 import re
+from rule_engine.engine.categories import classify_rule
 
 
 def parse_yara_rule(file_path):
@@ -25,7 +26,7 @@ def parse_yara_rule(file_path):
     if not validate_yara_rule(rule):
         raise ValueError(f"Invalid YARA rule: {file_path}")
 
-    return rule
+    return classify_rule(rule)
 
 
 def extract_strings(content):
@@ -76,7 +77,7 @@ def parse_yara_rule_string(content):
         rule['strings'] = extract_strings(content)
         rule['imports'] = extract_imports(content)
         rule['meta'] = extract_meta(content)
-        return rule
+        return classify_rule(rule)
     return content
 
 

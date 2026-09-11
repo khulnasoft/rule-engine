@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+from rule_engine.engine.categories import classify_rule
 
 
 def parse_wazuh_rule(file_path):
@@ -27,7 +28,7 @@ def parse_wazuh_rule(file_path):
         if not validate_wazuh_rule(rule):
             continue
 
-        rules.append(rule)
+        rules.append(classify_rule(rule))
 
     if not rules:
         raise ValueError(f"Invalid Wazuh rule: {file_path}")
